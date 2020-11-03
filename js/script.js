@@ -248,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				display: block;
 				margin: 0 auto;
 			`;
-			//form.append(statusMessage);
 			form.insertAdjacentElement('afterend', statusMessage);
 
 			const formData = new FormData(form);
@@ -256,16 +255,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			for(let [name, value] of formData) {
 				obj[name] = value;
 			}
-			//console.log('obj: ', obj);
+			console.log('obj: ', obj);
 
 			fetch('server.php', {
 				method: 'POST',
-				/*headers: {
+				headers: {
 					'Content-type': 'application/json'
-				},*/
-				body: formData
+				},
+				body: JSON.stringify(obj)
 			})
-			.then(data => data.text())
+			.then(data => data.json())
 			.then(data => {
 				console.log('php: ', data);
 				showThanksModal(message.success);
@@ -277,18 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			.finally(() => {
 				form.reset();
 			});
-
-			/*request.addEventListener('load', () => {
-				if (request.status === 200) {
-					console.log('php response: ', request.response);
-					showThanksModal(message.success);
-					form.reset();
-					statusMessage.remove();
-				} else {
-					showThanksModal(message.failure);
-				}
-
-			});*/
 
 		});
 	}
