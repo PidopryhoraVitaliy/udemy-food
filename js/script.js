@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				},
 				body: JSON.stringify(obj)
 			})
-			.then(data => data.json())
+			.then(data => data.text())
 			.then(data => {
 				console.log('php: ', data);
 				showThanksModal(message.success);
