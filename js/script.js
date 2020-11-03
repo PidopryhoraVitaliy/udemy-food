@@ -251,25 +251,34 @@ document.addEventListener('DOMContentLoaded', () => {
 			//form.append(statusMessage);
 			form.insertAdjacentElement('afterend', statusMessage);
 
-			const request = new XMLHttpRequest();
-			request.open('POST', 'server.php');
-			//request.setRequestHeader('Content-type', 'multipart/form-data');
-			request.setRequestHeader('Content-type', 'application/json');
 			const formData = new FormData(form);
-			//request.send(formData);
-
 			const obj = {};
-			//console.log(`js form data:`);
 			for(let [name, value] of formData) {
-				//console.log(`	${name} = ${value}`);
 				obj[name] = value;
 			}
+			//console.log('obj: ', obj);
 
-			console.log('obj: ', obj);
+			fetch('server.php', {
+				method: 'POST',
+				/*headers: {
+					'Content-type': 'application/json'
+				},*/
+				body: formData
+			})
+			.then(data => data.text())
+			.then(data => {
+				console.log('php: ', data);
+				showThanksModal(message.success);
+				statusMessage.remove();
+			})
+			.catch(() => {
+				showThanksModal(message.failure);
+			})
+			.finally(() => {
+				form.reset();
+			});
 
-			request.send(JSON.stringify(obj));
-			
-			request.addEventListener('load', () => {
+			/*request.addEventListener('load', () => {
 				if (request.status === 200) {
 					console.log('php response: ', request.response);
 					showThanksModal(message.success);
@@ -279,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					showThanksModal(message.failure);
 				}
 
-			});
+			});*/
 
 		});
 	}
@@ -306,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			prevModalDialog.classList.add('show');
 			prevModalDialog.classList.remove('hide');
 			hideModalWindow();
-		}, 5000);
+		}, 3000);
 
 	}
 
