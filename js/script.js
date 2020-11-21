@@ -302,6 +302,57 @@ document.addEventListener('DOMContentLoaded', () => {
 		.then(data => data.json())
 		.then(res => console.log(res))*/
 
+	
+	/////////////////////////////////////////////////////////
+	// SLIDER
+
+	let		sliderIndex		= 0;
+	const	prevButton		= document.querySelector('.offer__slider-prev'),
+			nextButton		= document.querySelector('.offer__slider-next'),
+			sliderCurrent	= document.querySelector('#current'),
+			sliderTotal		= document.querySelector('#total'),
+			sliderSrc		= [
+				{src: 'img/slider/food-12.jpg',		alt: 'food'},
+				{src: 'img/slider/olive-oil.jpg',	alt: 'oil'},
+				{src: 'img/slider/pepper.jpg',		alt: 'pepper'},
+				{src: 'img/slider/paprika.jpg',		alt: 'paprika'},
+			],
+			sliderImg		= document.querySelector('.offer__slide img');
+
+	function showSlide(offset = 0) {
+
+		sliderIndex += offset;
+		if ((sliderIndex + 1) > sliderSrc.length) {
+			sliderIndex = 0;
+		}
+		if ((sliderIndex + 1) < 1) {
+			sliderIndex = sliderSrc.length - 1;
+		}
+
+		let sliderData = sliderSrc[sliderIndex];
+		if (sliderData === undefined) {
+			sliderData = sliderSrc[0];
+		}
+
+		sliderCurrent.textContent	= sliderIndex + 1;
+		sliderTotal.textContent		= sliderSrc.length;
+
+		const {src, alt} = sliderData;
+		sliderImg.src = src;
+		sliderImg.alt = alt;
+
+	}
+
+	showSlide();
+
+	nextButton.addEventListener('click', () => {
+		showSlide(1);
+	});
+
+	prevButton.addEventListener('click', () => {
+		showSlide(-1);
+	});
+
 });
 
 
