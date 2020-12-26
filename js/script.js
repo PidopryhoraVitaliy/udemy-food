@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getZero(num) {
 		if (num < 0) {
-			return `0`;
+			return `00`;
 		}
         if (num >= 0 && num < 10) {
             return `0${num}`;
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// MODAL
 	
 	const modalWindow = document.querySelector('div.modal');
-	let timerOfModalWindowId = setTimeout(showModalWindow, 60000);
+	let timerOfModalWindowId = setTimeout(showModalWindow, 1200000);
 
 	function showModalWindow() {
 		modalWindow.classList.remove('hide');
@@ -307,51 +307,37 @@ document.addEventListener('DOMContentLoaded', () => {
 	// SLIDER
 
 	let		sliderIndex		= 0;
-	const	prevButton		= document.querySelector('.offer__slider-prev'),
-			nextButton		= document.querySelector('.offer__slider-next'),
+	const	sliderPrev		= document.querySelector('.offer__slider-prev'),
+			sliderNext		= document.querySelector('.offer__slider-next'),
 			sliderCurrent	= document.querySelector('#current'),
 			sliderTotal		= document.querySelector('#total'),
-			sliderSrc		= [
-				{src: 'img/slider/food-12.jpg',		alt: 'food'},
-				{src: 'img/slider/olive-oil.jpg',	alt: 'oil'},
-				{src: 'img/slider/pepper.jpg',		alt: 'pepper'},
-				{src: 'img/slider/paprika.jpg',		alt: 'paprika'},
-			],
-			sliderImg		= document.querySelector('.offer__slide img');
+			sliderImgs		= document.querySelectorAll('.offer__slide');
 
 	function showSlide(offset = 0) {
 
+		sliderImgs.forEach(img => {
+			img.classList.remove('show');
+			img.classList.add('hide');
+		});
+
 		sliderIndex += offset;
-		if ((sliderIndex + 1) > sliderSrc.length) {
+		if (sliderIndex > (sliderImgs.length - 1)) {
 			sliderIndex = 0;
-		}
-		if ((sliderIndex + 1) < 1) {
-			sliderIndex = sliderSrc.length - 1;
-		}
-
-		let sliderData = sliderSrc[sliderIndex];
-		if (sliderData === undefined) {
-			sliderData = sliderSrc[0];
+		} else if (sliderIndex < 0) {
+			sliderIndex = sliderImgs.length - 1;
 		}
 
-		sliderCurrent.textContent	= sliderIndex + 1;
-		sliderTotal.textContent		= sliderSrc.length;
+		sliderImgs[sliderIndex].classList.remove('hide');
+		sliderImgs[sliderIndex].classList.add('show');
 
-		const {src, alt} = sliderData;
-		sliderImg.src = src;
-		sliderImg.alt = alt;
+		sliderCurrent.textContent	= getZero(sliderIndex + 1);
+		sliderTotal.textContent		= getZero(sliderImgs.length);
 
 	}
 
 	showSlide();
-
-	nextButton.addEventListener('click', () => {
-		showSlide(1);
-	});
-
-	prevButton.addEventListener('click', () => {
-		showSlide(-1);
-	});
+	sliderNext.addEventListener('click', () => showSlide(1));
+	sliderPrev.addEventListener('click', () => showSlide(-1));
 
 });
 
