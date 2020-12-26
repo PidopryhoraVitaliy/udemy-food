@@ -311,27 +311,27 @@ document.addEventListener('DOMContentLoaded', () => {
 			sliderNext		= document.querySelector('.offer__slider-next'),
 			sliderCurrent	= document.querySelector('#current'),
 			sliderTotal		= document.querySelector('#total'),
-			sliderImgs		= document.querySelectorAll('.offer__slide');
+			slides			= document.querySelectorAll('.offer__slide');
 
 	function showSlide(offset = 0) {
 
-		sliderImgs.forEach(img => {
+		slides.forEach(img => {
 			img.classList.remove('show');
 			img.classList.add('hide');
 		});
 
 		sliderIndex += offset;
-		if (sliderIndex > (sliderImgs.length - 1)) {
+		if (sliderIndex > (slides.length - 1)) {
 			sliderIndex = 0;
 		} else if (sliderIndex < 0) {
-			sliderIndex = sliderImgs.length - 1;
+			sliderIndex = slides.length - 1;
 		}
 
-		sliderImgs[sliderIndex].classList.remove('hide');
-		sliderImgs[sliderIndex].classList.add('show');
+		slides[sliderIndex].classList.remove('hide');
+		slides[sliderIndex].classList.add('show');
 
 		sliderCurrent.textContent	= getZero(sliderIndex + 1);
-		sliderTotal.textContent		= getZero(sliderImgs.length);
+		sliderTotal.textContent		= getZero(slides.length);
 
 	}
 
