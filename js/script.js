@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		dot.addEventListener('click', (e) => {
 			const slideTo = e.target.getAttribute('data-slide-to');
 			sliderIndex = slideTo;
-			offset = +width.slice(0, width.length-2) * (slideTo-1);
+			offset = getNumberFromString(width) * (slideTo-1);
 			sliderField.style.transform = `translateX(-${offset}px)`;
 			updateCurrentSliderValue();
 			updateDotsStyle();
@@ -365,12 +365,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		sliderCurrent.textContent = getZero(sliderIndex);
 	}
 
+	function getNumberFromString(str) {
+		return +str.replace(/\D/g, '');
+	}
+
 	sliderNext.addEventListener('click', () => {
 
-		if (offset == +width.slice(0, width.length-2) * (slides.length-1)) {
+		if (offset == getNumberFromString(width) * (slides.length-1)) {
 			offset = 0;
 		} else {
-			offset += +width.slice(0, width.length-2);
+			offset += getNumberFromString(width);
 		}
 		
 		sliderField.style.transform = `translateX(-${offset}px)`;
@@ -389,9 +393,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	sliderPrev.addEventListener('click', () => {
 
 		if (offset == 0) {
-			offset = +width.slice(0, width.length-2) * (slides.length-1);
+			offset = getNumberFromString(width) * (slides.length-1);
 		} else {
-			offset -= +width.slice(0, width.length-2);
+			offset -= getNumberFromString(width);
 		}
 
 		sliderField.style.transform = `translateX(-${offset}px)`;
