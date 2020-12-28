@@ -45,6 +45,11 @@
       "name": "rty",
       "phone": "+380",
       "id": 5
+    },
+    {
+      "name": "work",
+      "phone": "0412",
+      "id": 6
     }
   ]
 }
